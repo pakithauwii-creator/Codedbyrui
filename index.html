@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Josephine! 🎉</title>
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('bg.jpg') no-repeat center center/cover fixed;
+      color: #ffffff;
+      position: relative;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      z-index: 10;
+    }
+
+    /* Card Wrapper */
+    .step-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 25px 20px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+      display: none;
+      animation: fadeIn 0.6s ease-in-out forwards;
+    }
+
+    .step-card.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Envelope Styles */
+    .envelope-wrapper {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      background: #e04868;
+      margin: 40px auto 20px;
+      border-radius: 0 0 10px 10px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .envelope-wrapper:hover {
+      transform: scale(1.03);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-top: 100px solid #d03050;
+      transform-origin: top;
+      transition: transform 0.6s ease;
+      z-index: 3;
+    }
+
+    .envelope-wrapper.open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .envelope-pocket {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 140px solid #f25278;
+      border-right: 140px solid #f25278;
+      border-bottom: 100px solid #e04868;
+      border-radius: 0 0 10px 10px;
+      z-index: 2;
+    }
+
+    .click-hint {
+      color: #ffeaa7;
+      font-size: 0.95rem;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    /* Letter Box */
+    .letter-box {
+      background: rgba(255, 255, 255, 0.95);
+      color: #2d3436;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-top: 20px;
+      display: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      min-height: 220px;
+      white-space: pre-wrap;
+    }
+
+    /* Buttons */
+    .btn {
+      background: linear-gradient(135deg, #ff7675, #d63031);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(214, 48, 49, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(214, 48, 49, 0.6);
+    }
+
+    /* Finale Floating Decorations */
+    .balloon {
+      position: fixed;
+      bottom: -100px;
+      font-size: 2.5rem;
+      animation: floatUp 6s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- STEP 1: ENVELOPE & LETTER -->
+    <div class="step-card active" id="step1">
+      <h2>📩 A Special Delivery For You</h2>
+      
+      <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
+        <div class="envelope-flap"></div>
+        <div class="envelope-pocket"></div>
+      </div>
+      <p class="click-hint" id="hint">Tap the envelope to open your letter!</p>
+
+      <div class="letter-box" id="letterBox"></div>
+
+      <button class="btn" id="nextBtn1" style="display: none;" onclick="goToStep(2)">
+        Continue ➔
+      </button>
+    </div>
+
+    <!-- STEP 2: FINALE & CAKE -->
+    <div class="step-card" id="step2">
+      <h2>🎉 Happy Birthday Josephine! 🎂</h2>
+      <p style="font-size: 1.1rem; margin: 15px 0;">
+        Hope your day is as amazing, fun, and wonderful as you are! 🎈✨
+      </p>
+
+      <div style="font-size: 4rem; margin: 20px 0; animation: bounce 1s infinite alternate;">
+        🎂🎁🥳
+      </div>
+
+      <button class="btn" onclick="goToStep(1)">
+        🔄 Read Letter Again
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // Letter text to be typed out
+    const letterText = `To Josephine
+
+Happy Birthday! 🎂✨
+
+Today is all about celebrating you! Look at you—a whole big girl now! Honestly, at your age, you don’t even need gifts anymore, right? Just the wisdom and grace of getting older!
+
+Which works out perfectly, because my bank account is currently broke. So instead of a gift, I built you this entire website! And trust me, wrestling with all this code to get it ready for your big day took me an eternity... so you better appreciate!
+
+On a serious note, you deserve the absolute best today. I hope your day is filled with tons of laughter, love, and happiness. Just make sure you save me a big slice of that cake your boyfriend bought you! 🍰🎉
+
+Have a fantastic birthday!`;
+
+    let envelopeOpened = false;
+
+    // Open envelope and start typing effect
+    function openEnvelope() {
+      if (envelopeOpened) return;
+      envelopeOpened = true;
+
+      document.getElementById('envelope').classList.add('open');
+      document.getElementById('hint').style.display = 'none';
+
+      setTimeout(() => {
+        document.getElementById('envelope').style.display = 'none';
+        const letterBox = document.getElementById('letterBox');
+        letterBox.style.display = 'block';
+        typeWriter(letterText, 0, letterBox, () => {
+          document.getElementById('nextBtn1').style.display = 'inline-flex';
+        });
+      }, 700);
+    }
+
+    // Typewriter effect function
+    function typeWriter(text, index, element, callback) {
+      if (index < text.length) {
+        element.innerHTML += text.charAt(index);
+        setTimeout(() => typeWriter(text, index + 1, element, callback), 35);
+      } else if (callback) {
+        callback();
+      }
+    }
+
+    // Navigation between step cards
+    function goToStep(stepNumber) {
+      document.querySelectorAll('.step-card').forEach(card => card.classList.remove('active'));
+      document.getElementById(`step${stepNumber}`).classList.add('active');
+
+      // Trigger floating balloons on final step
+      if (stepNumber === 2) {
+        createBalloons();
+      }
+    }
+
+    // Create floating balloon animation on finale
+    function createBalloons() {
+      const balloonEmojis = ['🎈', '🎉', '✨', '🎂', '💖'];
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          const balloon = document.createElement('div');
+          balloon.className = 'balloon';
+          balloon.innerText = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+          balloon.style.left = Math.random() * 90 + 'vw';
+          balloon.style.animationDuration = (Math.random() * 3 + 4) + 's';
+          document.body.appendChild(balloon);
+
+          setTimeout(() => balloon.remove(), 7000);
+        }, i * 300);
+      }
+    }
+  </script>
+</body>
+</html>
